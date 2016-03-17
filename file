@@ -1,0 +1,187 @@
+float manX,manY, walk, timeW;
+float sunX, sunY;
+int moon;
+int score;
+float goldX, goldY, newX, newY;
+
+void setup(){
+  
+ size(800,800); 
+            sunX=  00;                  // Reset the sun position.
+            sunY=  500;
+            manX= 400;
+            manY = 500;
+            walk = 5;
+            score = 0;
+            moon = -1;
+ 
+}
+void scene(){
+  if(moon == -1){
+            background(100,145,190);
+  }
+  else{
+    background(39,53,94);
+  }
+            frameRate(30);
+            fill(90,240, 20 );                  
+            rect( 0,height/2 + 100, 800,400 );
+            fill(90,240, 20 );               
+             rect( 0,450, 800,400 );
+  
+  
+}
+
+void draw(){
+  scene();
+  sun();
+  house();
+  tree();
+  man();
+  manMove();
+  gold();
+fill(0);
+  text(score, 10, 10);
+  
+  
+}
+
+
+
+void sun(){
+  if (moon == -1){
+      fill( 255, 255, 0 );
+  }
+  else{
+    fill(232, 219, 181);
+  }
+      ellipse( sunX, sunY, 30,30 );       // Yellow sun
+      
+  
+      
+       
+      sunX += 1;
+      if (sunX < width/2){
+            sunY = width - sunX;
+            
+      }
+      else{
+        sunY = sunX;
+      }
+      sunY -= 500;
+
+            if (sunX > width){
+              sunX=  00;
+              moon = moon * -1;
+              
+              
+            }
+
+    
+}
+
+
+void house(){
+
+            
+
+             // Draw a red house, with roof.
+            fill(150, 40, 20 );                 
+            rect( 150,350, 300,150 );
+            triangle( 100,350,300,200, 500,350 );  // Roof
+}
+
+void tree(){
+  
+            fill(90, 40, 20 );                 
+            rect( 650,350, 60,150 );
+            fill(0, 150, 0);
+            ellipse(680, 350, 150, 150);
+  
+  
+}
+
+void man(){
+            fill( 255,221,209 );
+            rect( manX, manY + 50 + walk, 10, 80 );    //lLeg
+            rect( manX + 40, manY + 50 - walk, 10, 80 );   //rLeg
+            rect( manX + 50, manY, 10, 60 );      //rArm
+            rect( manX - 10, manY, 10, 60 );   //lArm
+            ellipse( manX+25, manY-20, 40,40 );  //head
+            fill( 25,25,25);
+            rect( manX, manY + 50 + walk, 10, 70 ); //left pants
+            rect( manX + 40, manY + 50 - walk, 10, 70 ); //right pants
+            rect( manX + 50, manY, 10, 50 ); //right sleeve
+            rect( manX - 10, manY, 10, 50 ); //left sleeve
+             rect( manX, manY, 50, 80 );  //body
+             fill(255);
+             triangle(manX +10, manY, manX +40, manY, manX+ 25, manY + 30);
+
+             
+                   // Head
+            fill(0);
+            line(manX+47, manY-25, manX+47, manY);  //glasses
+           line(manX+20, manY -7, manX+35, manY-7);//mouth
+          
+            fill( 25);
+            rect(manX +5, manY - 75, 40, 45); //hat
+            rect(manX-5, manY - 40, 60, 10);
+            fill( 255);
+            rect( manX+15,manY-25, 7,7 );        //eyes
+            fill(230);
+            rect( manX+35,manY-25, 12,12 );
+             timeW++;
+    if(timeW%5 == 0){
+      walk = walk * -1;
+      
+    }
+            
+}
+void manMove(){
+  
+  if(manX+25 != 5*int(goldX/5 + .5)){
+    if(manX+25 > 5*int(goldX/5 + .5)){
+      manX -= 5;
+    }
+    else{
+      manX += 5;
+    }
+  }
+    if(manY+40 != 5*int(goldY/5 + .5)){
+        if(manY+40 > 5*int(goldY/5 + .5)){
+            manY -= 5;
+            }
+        else{
+            manY += 5;
+            }
+    }
+    
+    
+    
+    
+  
+
+
+}
+void mousePressed(){
+  
+  goldX = mouseX;
+  goldY = mouseY;
+  
+  
+  
+}
+
+void gold(){
+  fill(random(60) + 135,random(60) + 85,30);
+  ellipse( goldX, goldY, 40,40 );
+  if(5*int(goldX/5 + .5) == manX+25 && manY+40 == 5*int(goldY/5 + .5)){
+    goldX = random(20,780);
+    goldY = random(20, 780);
+    score++;
+    
+  }
+  
+  
+  
+}
